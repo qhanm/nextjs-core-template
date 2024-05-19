@@ -13,6 +13,7 @@ import { store } from '@/stores';
 
 // ** Redux
 import { Provider } from 'react-redux';
+import { SettingProvider, SettingsConsumer } from '@/contexts/SettingContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -30,7 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <AuthProvider>
-        <Component {...pageProps} />
+        <SettingProvider>
+          <SettingsConsumer>
+            {({ settings }) => {
+              return <Component {...pageProps} />;
+            }}
+          </SettingsConsumer>
+        </SettingProvider>
       </AuthProvider>
     </Provider>
   );

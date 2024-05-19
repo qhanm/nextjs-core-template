@@ -1,4 +1,4 @@
-import { Settings } from 'http2';
+import { Settings } from '../layout';
 
 type TSettingContextValue = {
   settings: Settings;
