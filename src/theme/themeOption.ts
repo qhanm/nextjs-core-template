@@ -7,14 +7,17 @@ const themeOptions = (
   settings: TSettingContextValue,
   overrideMode: PaletteMode,
 ): ThemeOptions => {
-  const { skin, mode, direction, themeColor } = settings;
-
   const userThemeConfig: ThemeOptions = Object.assign({}, UserThemeOptions());
 
   const mergedThemeConfig: ThemeOptions = deepmerge(
     {
       breakpoints: breakpoints(),
+      direction,
     },
     userThemeConfig,
   );
+
+  return deepmerge(mergedThemeConfig, {
+    palette: {},
+  });
 };
