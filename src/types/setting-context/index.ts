@@ -1,8 +1,9 @@
-import { Settings } from '../layout';
+// ** types
+import { TSettingLayout } from '../layout';
 
 type TSettingContextValue = {
-  settings: Settings;
-  saveSettings: (values: Settings) => void;
+  settings: TSettingLayout;
+  saveSettings: (values: TSettingLayout) => void;
 };
 
 export type { TSettingContextValue };

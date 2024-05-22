@@ -1,21 +1,31 @@
 // ** Next
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { NextPage } from 'next';
 
 // ** Config
 import themeConfig from '@/configs/themeConfig';
 
 // ** Context
 import { AuthProvider } from '@/contexts/AuthContext';
+import { SettingProvider, SettingsConsumer } from '@/contexts/SettingContext';
 
 // ** Redux store
 import { store } from '@/stores';
 
 // ** Redux
 import { Provider } from 'react-redux';
-import { SettingProvider, SettingsConsumer } from '@/contexts/SettingContext';
 
-export default function App({ Component, pageProps }: AppProps) {
+// ** Theme
+import ThemeComponent from '@/theme/ThemeComponent';
+
+type ExtendedAppProps = AppProps & {
+  Component: NextPage;
+};
+
+export default function App({ Component, pageProps }: ExtendedAppProps) {
+  const getLayout = Component.getLayout ?? ((page) => <>{page}</>);
+
   return (
     <Provider store={store}>
       <Head>
@@ -34,7 +44,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <SettingProvider>
           <SettingsConsumer>
             {({ settings }) => {
-              return <Component {...pageProps} />;
+              return (
+                <ThemeComponent settings={settings}>
+                  {getLayout(<Component {...pageProps} />)}
+                </ThemeComponent>
+              );
             }}
           </SettingsConsumer>
         </SettingProvider>
