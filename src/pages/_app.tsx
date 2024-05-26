@@ -44,6 +44,7 @@ export default function App({ Component, pageProps }: ExtendedAppProps) {
         <SettingProvider>
           <SettingsConsumer>
             {({ settings }) => {
+              console.log(settings);
               return (
                 <ThemeComponent settings={settings}>
                   {getLayout(<Component {...pageProps} />)}
