@@ -1,7 +1,7 @@
 import { TSettingLayout } from '@/types/layout';
-import { TSettingContextValue } from '@/types/setting-context';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { ReactNode } from 'react';
+import themeOptions from './themeOptions';
 
 interface Props {
   settings: TSettingLayout;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ThemeComponent = ({ settings, children }: Props) => {
-  let theme = createTheme();
+  let theme = createTheme(themeOptions());
 
   return (
     <ThemeProvider theme={theme}>
