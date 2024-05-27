@@ -4,9 +4,10 @@ import themeConfig from '@/configs/themeConfig';
 // ** type
 import { TSettingLayout } from '@/types/layout';
 import { TSettingContextValue } from '@/types/setting-context';
+import { restoreSetting, storeSettings } from '@/utils/storage';
 
 // ** react
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 
 const initialSettings: TSettingLayout = {
   themeColor: 'primary',
@@ -15,7 +16,6 @@ const initialSettings: TSettingLayout = {
 
 type SettingsProviderProps = {
   children: ReactNode;
-  pageSettings?: TSettingLayout | void;
 };
 
 const SettingContext = createContext<TSettingContextValue>({
@@ -23,12 +23,23 @@ const SettingContext = createContext<TSettingContextValue>({
   saveSettings: () => null,
 });
 
-const SettingProvider = ({ children, pageSettings }: SettingsProviderProps) => {
+const SettingProvider = ({ children }: SettingsProviderProps) => {
   const [settings, setSettings] = useState<TSettingLayout>({
     ...initialSettings,
   });
 
-  const saveSettings = (newSettings: TSettingLayout) => {};
+  useEffect(() => {
+    const restoredSettings = restoreSetting(initialSettings);
+
+    if (restoredSettings) {
+      setSettings(restoredSettings);
+    }
+  }, []);
+
+  const saveSettings = (newSettings: TSettingLayout) => {
+    storeSettings(newSettings);
+    setSettings(newSettings);
+  };
 
   return (
     <SettingContext.Provider value={{ settings, saveSettings }}>

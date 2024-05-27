@@ -5,14 +5,14 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({
   ...restProps
 }) => {
   return {
-    '& .MuiFormHelperText-root': {
+    '& .Mui-error': {
       marginLeft: 0,
       marginRight: 0,
       color: theme.palette.error.main,
     },
     '& .MuiInputBase-root': {
       borderRadius: 8,
-      border: `1px solid rgba(${theme.palette.primary.main}, 0.2)`,
+      // border: `1px solid rgba(${theme.palette.primary.main}, 0.2)`,
     },
     '& .MuiInputBase-root input': {
       padding: restProps.size === 'medium' ? '8px 12px' : '4px 8px',
@@ -40,7 +40,7 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({
 
 const TextInput = ({
   size = 'medium',
-  variant = 'filled',
+  variant = 'outlined',
   InputLabelProps,
   ...restProps
 }: TextFieldProps) => {
@@ -51,6 +51,8 @@ const TextInput = ({
       size={size}
       InputLabelProps={{ ...InputLabelProps, shrink: true }}
       focused
+      fullWidth
+      color="success"
     />
   );
 };
